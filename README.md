@@ -10,5 +10,5 @@ I hope people who are interested in exploring machine learning on new problems f
 
 ## Creating the fencing clips database
 
-- Typing in progress, should be up within the next few days!
+- Typing in progress, should be up within the next few days! In short, I downloaded all the fencing clips from various world cups, and used OpenCV to cut up the video into short clips preceding each time the scoreboard lit up. Then, I trained a small logistic classifier to distinguish when the numbers on the scoreboard changed. In certain situations (only when both people hit and at least one of them was on-target), the ref has to make a decision. In these, depending on how the scoreboard changes we can auto-label the clips with who's hit it was. All the clips with only one hit are discarded because they can't be auto-labelled. 
 
