@@ -2,7 +2,10 @@
 
 In fencing, when both competitors hit eachother within a few miliseconds, both sides of the scoreboard will light up. Then the referee has to make a decision on who's point it is. As a rough rule of thumb, it goes to who took more initiative or who had more control over what happened. So I've experimented with training a model to fill in for the referee! So far, it has an accuracy of ~60% on the foil test set, up from the 33% that random chance would give (choosing between left, right and no point eitherway). I'm about to run it on sabre. (Foil and Sabre are the two types of fencing where there referee has to decide, in the final one 'Epee', both people get the point).
 
-<div style="text-align:center"><img src ="https://github.com/SholtoD/fencing-AI/blob/master/example_clip.gif" /></div>
+
+<p align="center">
+  <img src="https://github.com/SholtoD/fencing-AI/blob/master/example_clip.gif?raw=true" alt="Who's point is this?"/>
+</p>
 
 
 
