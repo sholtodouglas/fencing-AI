@@ -1,5 +1,5 @@
 # Using Deep Learning to Referee Fencing
-
+<div style="text-align: justify"> 
 In fencing, when both competitors hit eachother within a few miliseconds, both sides of the scoreboard will light up. Then the referee has to make a decision on who's point it is. As a rough rule of thumb, it goes to who took more initiative or who had more control over what happened. So I've experimented with training a model to fill in for the referee! So far, it has an accuracy of ~60% on the foil test set, up from the 33% that random chance would give (choosing between left, right and no point eitherway). I'm about to run it on sabre. (Foil and Sabre are the two types of fencing where there referee has to decide, in the final one 'Epee', both people get the point).
 
 
@@ -19,3 +19,4 @@ I hope people who are interested in exploring machine learning on new problems f
 
 - Typing in progress, should be up within the next few days! In short, I downloaded all the fencing clips from various world cups, and used OpenCV to cut up the video into short clips preceding each time the scoreboard lit up. Then, I trained a small logistic classifier to distinguish when the numbers on the scoreboard changed. In certain situations (only when both people hit and at least one of them was on-target), the ref has to make a decision. In these, depending on how the scoreboard changes we can auto-label the clips with who's hit it was. All the clips with only one hit are discarded because they can't be auto-labelled. 
 
+</div>
