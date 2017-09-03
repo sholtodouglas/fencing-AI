@@ -9,9 +9,14 @@ In fencing, when both competitors hit eachother within a few miliseconds, both s
 
 
 
-There are a few big challenges here, the primary one being that there is no labelled dataset of fencing clips! In general, video classification is a less explored than image classification, and even some of the most popular video datasets (like SPORTS 1-M) can have very respectable accuracies achieved on them by just looking at a single frame. Most model architectures used in video classification are a combination of convolutional and recurrent nets. Convolutional to extract the features from each frame, with a recurrent network interpereting these and arriving at a final decision. I think the most interesting proposal here is a fully recurrent convolutional network, where every layer is recurrent. For the moment I've tried an approach which needs less data to be successful, which is taking a pretrained InceptionV3 net and using that on each frame of every clip to extract the convolutional features (i.e converting each frame into a 1x2048 vector). In the inception network that feature vector is then interpreted by one fully connected layer for the Imagenet database but the same feature vector should work reasonably well as representations of what is happening in my frames. Then a multi-layer LSTM is trained on 'clips' of these feature vectors. 
+There are a few big challenges here, the primary one being that there is no labelled dataset of fencing clips! In general, video classification is a less explored than image classification, and even some of the most popular video datasets (like SPORTS 1-M) can have very respectable accuracies achieved on them by just looking at a single frame. Most model architectures used in video classification are a combination of convolutional and recurrent nets. Convolutional to extract the features from each frame, with a recurrent network interpereting these and arriving at a final decision. I think the most interesting proposal here is a fully recurrent convolutional network, where every layer is recurrent. For the moment I've tried an approach which needs less data to be successful, which is taking a pretrained InceptionV3 net and using that on each frame of every clip to extract the convolutional features (i.e converting each frame into a 1x2048 vector). In the inception network that feature vector is then interpreted by one fully connected layer for the Imagenet database but the same feature vector should work reasonably well as representations of what is happening in my frames. Then a multi-layer LSTM is trained on 'clips' of these feature vectors. I used an p2 spot instance on AWS to train the model. 
 
 So that the network picks up on the concept of relative motion faster, before converting each frame to a feature vector the dense optical flow of the frame with respect to the previous frame is computed, mapped to a colorwheel and overlaid on the frame. The original frame is conveted into black and white, so that the network doesn't have to learn to distinguish between movement and the original colors. The use of optical flow is inspired by Karen Simonyan and Andrew Zisserman in 'Two-Stream Convolutional Networks for Action Recognition in Videos'.
+
+<p align="center">
+  <img src="https://github.com/SholtoD/fencing-AI/blob/master/optical_flow_example.gif?raw=true" alt="Who's point is this?"/>
+</p>
+
 
 I hope people who are interested in exploring machine learning on new problems find the code here useful. It'll take you all the way through creating your own dataset to a decent example of how to load and use pretrained models, and train and serve your own model.
 
@@ -19,4 +24,8 @@ I hope people who are interested in exploring machine learning on new problems f
 
 - Typing in progress, should be up within the next few days! In short, I downloaded all the fencing clips from various world cups, and used OpenCV to cut up the video into short clips preceding each time the scoreboard lit up. Then, I trained a small logistic classifier to distinguish when the numbers on the scoreboard changed. In certain situations (only when both people hit and at least one of them was on-target), the ref has to make a decision. In these, depending on how the scoreboard changes we can auto-label the clips with who's hit it was. All the clips with only one hit are discarded because they can't be auto-labelled. 
 
+## Next steps
+I've got a fully recurrent example working on a toy example (MNIST where you only show it slices of the image of a time, simulating a temporal dimension). Soon I'll spin up a server and download / process all the data again, because the internet here is too slow to upload the full data (~40GB), wheras it was fine for processing the data on my laptop then uploading the feature vectors. Firstly however I'm curious to see if the model performs better on the sabre dataset, so that'll be run within the next week. 
+
 </div>
+
