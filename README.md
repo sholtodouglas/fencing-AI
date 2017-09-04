@@ -36,7 +36,6 @@ Because we don't have a huge huge amount of examples, usinging transfer learning
 All thats done here is taking the tensor from the penultimate layer of the InceptionV3 network. ~ Typing in progress.
 
 
-
 ## Next steps
 I've got a fully recurrent example working on a toy example (MNIST where you only show it slices of the image of a time, simulating a temporal dimension). Soon I'll spin up a server and download / process all the data again, because the internet here is too slow to upload the full data (~40GB), wheras it was fine for processing the data on my laptop then uploading the feature vectors. Firstly however I'm curious to see if the model performs better on the sabre dataset, so that'll be run within the next week. 
 
