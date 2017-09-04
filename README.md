@@ -23,10 +23,19 @@ I hope people who are interested in exploring machine learning on new problems f
 ## Creating the fencing clips database
 In short, I downloaded all the fencing clips from various world cups, and used OpenCV to cut up the video into short clips preceding each time the scoreboard lit up. Then, I trained a small logistic classifier to distinguish when the numbers on the scoreboard changed. In certain situations (only when both people hit and at least one of them was on-target), the ref has to make a decision. In these, depending on how the scoreboard changes we can auto-label the clips with who's hit it was. All the clips with only one light are discarded because they can't be auto-labelled. 
 
-Next, I downsampled the videos, keeping more frames from the end than from the beginning. These clips are flipped horizontally to double our dataset size. Then, I overlaid the optical flow over the clips using openCV. Finally, these clips are saved into numpy arrays using the package hickle, which is excelent for compression. Due to how big the files are, the dataset is saved in blocks of 100 x #frames x height x width x depth. Ultimately I got a dataset of ~5,500 clips from the matches I was able to find, which becomes ~11,000 with the horizontal flipping. This isn't a huge amount of examples, which led me to try using transfer learning to extract features rather than training my own. Then, only the recurrent net on top has to learn from scratch. 
+Next, I downsampled the videos, keeping more frames from the end than from the beginning. These clips are flipped horizontally to double our dataset size. Then, I overlaid the optical flow over the clips using openCV. Finally, these clips are saved into numpy arrays using the package hickle, which is excelent for compression. Due to how big the files are, the dataset is saved in blocks of 100 x #frames x height x width x depth. Ultimately I got a dataset of ~5,500 clips from the matches I was able to find, which becomes ~11,000 with the horizontal flipping. 
 
-## Using the pretrained Inception Net
-All thats done here is taking the tensor from the penultimate layer of the InceptionV3 network.  ~ Typing in progress.
+## Model Architecture
+Because we don't have a huge huge amount of examples, usinging transfer learning to extract features rather than training my own conv layers make sense. Then, only the recurrent net on top has to learn from scratch. I experimented with a few architectures, and 4 layers with dropout of 0.2 works alright so far. Without dropout as a regularizer the model begins to overfit. I plan on investigating batch-norm as a regularizer soon. 
+
+<p align="center">
+  <img src="https://github.com/SholtoD/fencing-AI/blob/master/resources/architecture.png" alt="Architecture?"/>
+</p>
+
+### Using the pretrained Inception Net
+All thats done here is taking the tensor from the penultimate layer of the InceptionV3 network. ~ Typing in progress.
+
+
 
 ## Next steps
 I've got a fully recurrent example working on a toy example (MNIST where you only show it slices of the image of a time, simulating a temporal dimension). Soon I'll spin up a server and download / process all the data again, because the internet here is too slow to upload the full data (~40GB), wheras it was fine for processing the data on my laptop then uploading the feature vectors. Firstly however I'm curious to see if the model performs better on the sabre dataset, so that'll be run within the next week. 
